@@ -9,6 +9,7 @@ def index_view(request):
         form = ChatForm(request.POST)
         # If not valid, previously filled form will be presented in HTML
         if form.is_valid():
+            request.session['user_name'] = form.cleaned_data["user_name"]
             return HttpResponseRedirect(f'/chat/{form.cleaned_data["room_name"]}/')
     else:
         form = ChatForm()
