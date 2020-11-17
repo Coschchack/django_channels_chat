@@ -3,7 +3,7 @@ FROM python:3.8.6-slim-buster
 WORKDIR /chat
 ENV PYTHONPATH .
 
-RUN apt-get update && apt-get install -y build-essential
+RUN apt-get update && apt-get install -y gcc
 
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
