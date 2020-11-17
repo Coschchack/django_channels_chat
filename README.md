@@ -30,3 +30,13 @@ forward it over WebSocket back to JavaScript, where it will be appended to the c
 
 The information (messages) between the client and server are sent via JSONs. Thanks to that, so more information can 
 be added at any time simply by extending the JSON fields.
+
+## Running the chat in Dockers
+1. From the root folder of the repository, build the needed image(s):
+`docker-compose -f docker/docker-compose.yml build`
+2. Start the chat:
+`docker-compose -f docker/docker-compose.yml up`
+3. Access the chat in the browser by:
+`http://127.0.0.1:8000/chat`
+4. At the end, put the containers down:
+`docker-compose -f docker/docker-compose.yml down`
