@@ -20,5 +20,6 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'chat_site.settings')
 
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),
+    # With the below way, AuthMiddleware is applied to all websocket urls
     "websocket": AuthMiddlewareStack(URLRouter(websocket_urlpatterns)),
 })
