@@ -1,5 +1,4 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from chat_room.forms import ChatForm
 
@@ -10,7 +9,7 @@ def index_view(request):
         # If not valid, previously filled form will be presented in HTML
         if form.is_valid():
             request.session['user_name'] = form.cleaned_data["user_name"]
-            return HttpResponseRedirect(f'/chat/{form.cleaned_data["room_name"]}/')
+            return redirect(f'/chat/{form.cleaned_data["room_name"]}/')
     else:
         form = ChatForm()
 
