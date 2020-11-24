@@ -6,7 +6,7 @@
     <title>Chat Rooms</title>
 </head>
 <body>
-    <form action="{% url 'index' %}" method="post">
+    <form action="{% url 'room' %}" method="post">
         {% csrf_token %}
         {{ form }}
         <br><input type="submit" value="Submit">
