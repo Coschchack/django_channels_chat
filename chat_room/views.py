@@ -12,7 +12,8 @@ def room_view(request):
         form = ChatForm(request.POST)
         if form.is_valid():
             context = {
-                "room_name": "ASDASDASD"
+                "room_name": form.cleaned_data["room_name"],
+                "user_name": form.cleaned_data["user_name"],
             }
             return render(request, 'room.html', context)
         else:

@@ -6,23 +6,33 @@
     <title>Chat Room</title>
 </head>
 <body>
-    <label>Chat room conversation</label><br>
+    <label>Chat room: </label><label id="room-name">{{ room_name }}</label><br>
+    <label>User name: </label><label id="user-name">{{ user_name }}</label><br>
     <textarea id="chat-log" cols="100" rows="20"></textarea><br>
-    <label>New message</label><br>
+    <label>New message:</label><br>
     <input id="chat-message-input" type="text" size="100"><br>
     <input id="chat-message-submit" type="button" value="Send">
-    {{ room_name|json_script:"room-name" }}
     <script>
+        var userName = document.querySelector('#user-name').textContent;
+        var roomName = document.querySelector('#room-name').textContent;
+
         var wsStart = 'ws://';
         if (window.location.protocol === 'https:'){
             wsStart = 'wss://'
         }
-        const endpoint = wsStart + window.location.host + '/ws' + window.location.pathname;
+        const endpoint = wsStart + window.location.host + '/ws' + window.location.pathname + roomName;
         const chatSocket = new WebSocket(endpoint);
 
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
             document.querySelector('#chat-log').value += (data.user_name + ': ' + data.message + '\n');
+        };
+
+        chatSocket.onopen = function(e) {
+            chatSocket.send(JSON.stringify({
+                'user_name': userName,
+                'message': 'Hi! I just have joined the chat'
+            }));
         };
 
         chatSocket.onclose = function(e) {
