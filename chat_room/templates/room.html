@@ -25,13 +25,14 @@
 
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
-            document.querySelector('#chat-log').value += (data.user_name + ': ' + data.message + '\n');
+            var log = data.user_name + ' (' + data.timestamp + ')' + ': ' + data.message + '\n';
+            document.querySelector('#chat-log').value += log;
         };
 
         chatSocket.onopen = function(e) {
             chatSocket.send(JSON.stringify({
                 'user_name': userName,
-                'message': 'Hi! I just have joined the chat'
+                'message': 'Hi! I have just joined the chat'
             }));
         };
 

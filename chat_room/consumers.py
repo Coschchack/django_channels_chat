@@ -1,3 +1,4 @@
+import datetime
 import json
 
 from channels.generic.websocket import AsyncWebsocketConsumer
@@ -12,7 +13,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.room_group_name,
             self.channel_name,
         )
-        # if we do not call accept() then the connection will be rejected and closed
         await self.accept()
 
     async def disconnect(self, close_code):
@@ -23,9 +23,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
     async def receive(self, text_data):
-        """
-        Receive message from a Websocket, and send it to the room group.
-        """
         text_data_json = json.loads(text_data)
         self.user_name = text_data_json.get("user_name", self.user_name)
         await self.group_send(text_data_json['message'])
@@ -41,10 +38,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
     async def chat_message(self, event):
-        """
-        When a message hits the room group, send it to the WebSocket.
-        """
         await self.send(text_data=json.dumps({
             'user_name': event['user_name'],
             'message': event['message'],
+            'timestamp': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         }))
