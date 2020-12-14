@@ -1,15 +1,5 @@
-<!-- chat/templates/chat/index.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Chat Rooms</title>
-</head>
-<body>
-    <form action="{% url 'room' %}" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <br><input type="submit" value="Submit">
-    </form>
-</body>
-</html>
+{% block page_content %}
+    <head>
+        <title>Index page</title>
+    </head>
+{% endblock %}

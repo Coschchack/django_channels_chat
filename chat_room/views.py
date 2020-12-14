@@ -3,8 +3,17 @@ from django.shortcuts import render, HttpResponse, redirect
 from chat_room.forms import ChatForm
 
 
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        # TODO check against DB
+        return redirect(index_view)
+    return render(request, 'login.html')
+
+
 def index_view(request):
-    return render(request, 'index.html', {'form': ChatForm()})
+    return render(request, 'index.html')
 
 
 def room_view(request):
